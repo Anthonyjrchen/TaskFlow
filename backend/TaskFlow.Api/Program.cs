@@ -1,13 +1,34 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton(provider =>
+{
+    var cfg = builder.Configuration.GetSection("Supabase");
+    var url = cfg["Url"] ?? throw new InvalidOperationException("Supabase URL is missing");
+    var key = cfg["AnonKey"] ?? throw new InvalidOperationException("Supabase AnonKey is missing");
+    return new Supabase.Client(url, key);
+});
 
 
 var app = builder.Build();
+
+// Test Supabase connection on startup
+using (var scope = app.Services.CreateScope())
+{
+    var supabase = scope.ServiceProvider.GetRequiredService<Supabase.Client>();
+    try
+    {
+        await supabase.InitializeAsync();
+        Console.WriteLine("✅ Supabase connection successful!");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"❌ Supabase connection failed: {ex.Message}");
+        throw; // Stop the app if DB connection fails
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
