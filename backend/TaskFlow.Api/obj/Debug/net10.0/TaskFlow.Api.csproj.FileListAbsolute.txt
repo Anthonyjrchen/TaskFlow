@@ -112,3 +112,7 @@ C:\Users\antho\Desktop\TaskFlow\backend\TaskFlow.Api\obj\Debug\net10.0\refint\Ta
 C:\Users\antho\Desktop\TaskFlow\backend\TaskFlow.Api\obj\Debug\net10.0\TaskFlow.Api.pdb
 C:\Users\antho\Desktop\TaskFlow\backend\TaskFlow.Api\obj\Debug\net10.0\TaskFlow.Api.genruntimeconfig.cache
 C:\Users\antho\Desktop\TaskFlow\backend\TaskFlow.Api\obj\Debug\net10.0\ref\TaskFlow.Api.dll
+C:\Users\antho\Desktop\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\antho\Desktop\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\antho\Desktop\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\antho\Desktop\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\appsettings_example.json
