@@ -52,3 +52,6 @@ C:\Users\antho\OneDrive\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\Supabase
 C:\Users\antho\OneDrive\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\antho\OneDrive\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\System.Reactive.dll
 C:\Users\antho\OneDrive\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\Websocket.Client.dll
+C:\Users\antho\OneDrive\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\antho\OneDrive\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\antho\OneDrive\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\Newtonsoft.Json.Bson.dll

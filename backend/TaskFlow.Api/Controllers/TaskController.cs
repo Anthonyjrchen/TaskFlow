@@ -21,5 +21,13 @@ namespace TaskFlow.Api.Controllers
             var response = await _supabase.From<TaskItem>().Get();
             return Ok(response.Models);
         }
+
+        // Create a task
+        [HttpPost]
+        public async Task<IActionResult> CreateTask([FromBody] TaskItem task)
+        {
+            var response = await _supabase.From<TaskItem>().Insert(task);
+            return CreatedAtAction(nameof(GetAllTasks), new { id = response.Models.First().id}, response.Models.First());
+        }
     }
 }
