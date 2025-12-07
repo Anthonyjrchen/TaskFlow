@@ -1343,19 +1343,21 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\antho\\Desktop\\TaskFlow\\backend\\TaskFlow.Api\\TaskFlow.Api.csproj",
+      "projectUniqueName": "C:\\Users\\antho\\OneDrive\\TaskFlow\\backend\\TaskFlow.Api\\TaskFlow.Api.csproj",
       "projectName": "TaskFlow.Api",
-      "projectPath": "C:\\Users\\antho\\Desktop\\TaskFlow\\backend\\TaskFlow.Api\\TaskFlow.Api.csproj",
+      "projectPath": "C:\\Users\\antho\\OneDrive\\TaskFlow\\backend\\TaskFlow.Api\\TaskFlow.Api.csproj",
       "packagesPath": "C:\\Users\\antho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\antho\\Desktop\\TaskFlow\\backend\\TaskFlow.Api\\obj\\",
+      "outputPath": "C:\\Users\\antho\\OneDrive\\TaskFlow\\backend\\TaskFlow.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\antho\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\antho\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
