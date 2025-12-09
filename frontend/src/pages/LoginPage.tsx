@@ -29,7 +29,7 @@ function LoginPage() {
         navigate("/tasks");
       }
     } catch (error: any) {
-      setError(error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
