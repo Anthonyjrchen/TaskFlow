@@ -61,6 +61,7 @@ function LoginPage() {
           {loading ? "Loading..." : "Submit"}
         </button>
       </form>
+      <a href="/signup">No account? Sign up here</a>
     </div>
   );
 }
