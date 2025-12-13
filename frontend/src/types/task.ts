@@ -1,15 +1,20 @@
 export interface Task {
-    id: number
-    user_id: string
-    title: string
-    is_done: boolean
+  id: number;
+  user_id: string;
+  title: string;
+  is_done: boolean;
 }
 
 export interface CreateTaskDto {
-    title: string
+  title: string;
 }
 
 export interface UpdateTaskDto {
-    title: string
-    is_done: boolean
+  title?: string;
+  isDone?: boolean;
+}
+
+export interface User {
+  id: string;
+  email: string;
 }
