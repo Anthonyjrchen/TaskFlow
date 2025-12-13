@@ -1,15 +1,14 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+
+import { AuthProvider } from "./contexts/AuthContext";
 import "./App.css";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import TasksPage from "./pages/TasksPage";
 import SignupPage from "./pages/SignupPage";
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
+    <AuthProvider>
     <BrowserRouter>
       <Routes>
         {/* Default route - show tasks page (locked if not logged in) */}
@@ -22,6 +21,7 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
       </Routes>
     </BrowserRouter>
+    </AuthProvider>
   );
 }
 

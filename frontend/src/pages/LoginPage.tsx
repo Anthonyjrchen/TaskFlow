@@ -26,7 +26,7 @@ function LoginPage() {
       if (data.session) {
         console.log("Session token: " + data.session.access_token);
         setAccessToken(data.session.access_token);
-        navigate("/tasks");
+        navigate("/");
       }
     } catch (error: any) {
       setError(error.message);

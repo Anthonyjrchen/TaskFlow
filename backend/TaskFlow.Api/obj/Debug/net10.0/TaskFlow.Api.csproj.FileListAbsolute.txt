@@ -116,3 +116,7 @@ C:\Users\antho\Desktop\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\Microsoft
 C:\Users\antho\Desktop\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
 C:\Users\antho\Desktop\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\antho\Desktop\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\appsettings_example.json
+C:\Users\antho\OneDrive\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\appsettings_example.json
+C:\Users\antho\OneDrive\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\antho\OneDrive\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\antho\OneDrive\TaskFlow\backend\TaskFlow.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
