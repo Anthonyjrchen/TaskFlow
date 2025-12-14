@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { supabase, setAccessToken } from "../services/supabase";
+import { supabase } from "../lib/supabase";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -9,6 +10,7 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { signIn } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,18 +18,8 @@ function LoginPage() {
     setLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      });
-
-      if (error) throw error;
-
-      if (data.session) {
-        console.log("Session token: " + data.session.access_token);
-        setAccessToken(data.session.access_token);
-        navigate("/");
-      }
+      await signIn(email, password);
+      navigate("/");
     } catch (error: any) {
       setError(error.message);
     } finally {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { Task, CreateTaskDto, UpdateTaskDto } from "../types/task";
-import { getAccessToken } from "./supabase";
+import { supabase } from "../lib/supabase";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -13,10 +13,12 @@ const api = axios.create({
 });
 
 // Add authorization header to every request
-api.interceptors.request.use((config) => {
-  const token = getAccessToken();
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+api.interceptors.request.use(async (config) => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (session?.access_token) {
+    config.headers.Authorization = `Bearer ${session.access_token}`;
   }
   return config;
 });
