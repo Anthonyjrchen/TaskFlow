@@ -78,8 +78,8 @@ function TasksPage() {
   };
 
   return (
-    <div>
-      <div className="flex items-center justify-between">
+    <div className="h-screen flex flex-col p-6 overflow-hidden">
+      <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold">Task Manager</h1>
           <h2 className="text-gray-600">
@@ -107,28 +107,30 @@ function TasksPage() {
           </button>
         )}
       </div>
-      {user ? (
-        <>
-          <TaskList
-            tasks={tasks}
-            onToggleTask={handleToggleTask}
-            onEditTask={handleEditTask}
-            onDeleteTask={handleDeleteTask}
-          />
-          <EditTaskModal
-            isOpen={isEditModalOpen}
-            onClose={() => setIsEditModalOpen(false)}
-            task={taskToEdit}
-            onSave={handleSaveEdit}
-          />
-        </>
-      ) : (
-        <div className="w-full mt-8 overflow-hidden rounded-xl shadow-lg bg-white">
-          <div className="px-6 py-12 text-center text-gray-500">
-            Log in to view your tasks
+      <div className="flex-1 overflow-y-auto">
+        {user ? (
+          <>
+            <TaskList
+              tasks={tasks}
+              onToggleTask={handleToggleTask}
+              onEditTask={handleEditTask}
+              onDeleteTask={handleDeleteTask}
+            />
+            <EditTaskModal
+              isOpen={isEditModalOpen}
+              onClose={() => setIsEditModalOpen(false)}
+              task={taskToEdit}
+              onSave={handleSaveEdit}
+            />
+          </>
+        ) : (
+          <div className="w-full overflow-hidden rounded-xl shadow-lg bg-white">
+            <div className="px-6 py-12 text-center text-gray-500">
+              Log in to view your tasks
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
