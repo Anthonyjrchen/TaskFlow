@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { taskApi } from "../services/api";
 import type { Task } from "../types/task";
 import AddTaskButton from "../components/AddTaskButton";
+import TaskList from "../components/TaskList";
 
 function TasksPage() {
   const { user, signOut } = useAuth();
@@ -33,6 +34,18 @@ function TasksPage() {
     }
   };
 
+  const handleToggleTask = async (taskId: number) => {
+    try {
+      const task = tasks.find((t) => t.id === taskId);
+      if (task) {
+        await taskApi.update(taskId, { isDone: !task.is_done });
+        loadTasks();
+      }
+    } catch (err: any) {
+      console.error("Error toggling task:", err);
+    }
+  };
+
   if (user) {
     return (
       <div>
@@ -50,15 +63,7 @@ function TasksPage() {
             Logout
           </button>
         </div>
-        <div className="border-4 border-cyan w-100 h-96 bg-gray-50">
-          <ul>
-            {tasks.map((task) => (
-              <li key={task.id}>
-                {task.title} {task.is_done ? "✅" : "⬜"}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <TaskList tasks={tasks} onToggleTask={handleToggleTask} />
       </div>
     );
   } else {
