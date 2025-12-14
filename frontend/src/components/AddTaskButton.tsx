@@ -2,7 +2,7 @@ import { useState } from "react";
 import AddTaskModal from "./AddTaskModal";
 
 interface AddTaskButtonProps {
-  onTaskAdded: (title: string) => void;
+  onTaskAdded: (title: string, dueDate: string) => void;
 }
 
 function AddTaskButton({ onTaskAdded }: AddTaskButtonProps) {

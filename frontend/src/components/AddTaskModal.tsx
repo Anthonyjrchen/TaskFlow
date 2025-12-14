@@ -4,16 +4,20 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 interface AddTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onTaskAdded: (title: string) => void;
+  onTaskAdded: (title: string, dueDate: string) => void;
 }
 
 function AddTaskModal({ isOpen, onClose, onTaskAdded }: AddTaskModalProps) {
   const [title, setTitle] = useState("");
+  const [dueDate, setDueDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onTaskAdded(title);
+    onTaskAdded(title, dueDate);
     setTitle("");
+    setDueDate(new Date().toISOString().split("T")[0]);
     onClose();
   };
 
@@ -31,28 +35,54 @@ function AddTaskModal({ isOpen, onClose, onTaskAdded }: AddTaskModalProps) {
           </DialogTitle>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Task title"
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            <div>
+              <label
+                htmlFor="task-title"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Task Title
+              </label>
+              <input
+                id="task-title"
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Enter task title"
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="due-date"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Due Date
+              </label>
+              <input
+                id="due-date"
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                min={new Date().toISOString().split("T")[0]}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 cursor-pointer"
+              />
+            </div>
 
             <div className="flex gap-2 justify-end">
               <button
-                type="submit"
-                className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
-              >
-                Add Task
-              </button>
-              <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+                className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
               >
                 Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 text-white bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg hover:from-cyan-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all shadow-sm hover:shadow-md"
+              >
+                Add Task
               </button>
             </div>
           </form>

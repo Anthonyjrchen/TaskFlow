@@ -28,9 +28,9 @@ function TasksPage() {
     }
   };
 
-  const handleTaskAdded = async (title: string) => {
+  const handleTaskAdded = async (title: string, dueDate: string) => {
     try {
-      await taskApi.create({ title });
+      await taskApi.create({ title, due_date: dueDate });
       loadTasks();
     } catch (err: any) {
       console.error("Error creating task:", err);
