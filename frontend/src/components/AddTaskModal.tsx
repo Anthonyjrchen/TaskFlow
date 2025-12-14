@@ -66,7 +66,7 @@ function AddTaskModal({ isOpen, onClose, onTaskAdded }: AddTaskModalProps) {
                 htmlFor="due-date"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                getTodayLocal() Due Date
+                Due Date
               </label>
               <input
                 id="due-date"
