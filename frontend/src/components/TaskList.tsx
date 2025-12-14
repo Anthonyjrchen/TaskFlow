@@ -13,6 +13,16 @@ function TaskList({
   onEditTask,
   onDeleteTask,
 }: TaskListProps) {
+  // Sort tasks by due_date (ascending), then by title (alphabetically)
+  const sortedTasks = [...tasks].sort((a, b) => {
+    // Compare due dates
+    const dateComparison = a.due_date.localeCompare(b.due_date);
+    if (dateComparison !== 0) return dateComparison;
+
+    // If dates are equal, compare titles alphabetically
+    return a.title.localeCompare(b.title);
+  });
+
   return (
     <div className="w-full overflow-hidden rounded-xl shadow-lg bg-white">
       <div className="overflow-x-auto">
@@ -26,6 +36,9 @@ function TaskList({
                 Task Name
               </th>
               <th className="px-6 py-4 text-center text-sm font-semibold text-white uppercase tracking-wider">
+                Due Date
+              </th>
+              <th className="px-6 py-4 text-center text-sm font-semibold text-white uppercase tracking-wider">
                 Edit
               </th>
               <th className="px-6 py-4 text-center text-sm font-semibold text-white uppercase tracking-wider">
@@ -34,14 +47,14 @@ function TaskList({
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {tasks.length === 0 ? (
+            {sortedTasks.length === 0 ? (
               <tr>
-                <td colSpan={4} className="px-6 py-8 text-center text-gray-500">
+                <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
                   No tasks yet. Add one to get started!
                 </td>
               </tr>
             ) : (
-              tasks.map((task) => (
+              sortedTasks.map((task) => (
                 <tr
                   key={task.id}
                   className="hover:bg-gray-50 transition-colors duration-150"
@@ -63,6 +76,15 @@ function TaskList({
                       }`}
                     >
                       {task.title}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
+                    <span className="text-sm text-gray-700">
+                      {new Date(task.due_date).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-center">

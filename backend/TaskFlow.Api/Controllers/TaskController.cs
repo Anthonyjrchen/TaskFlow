@@ -31,7 +31,8 @@ namespace TaskFlow.Api.Controllers
             {
                 user_id = userID,
                 title = dto.Title,
-                is_done = false
+                is_done = false,
+                due_date = DateOnly.Parse(dto.Due_Date)
             };
             var response = await _supabase.From<TaskItem>().Insert(task);
             return CreatedAtAction(nameof(GetAllTasks), new { id = response.Models.First().id}, response.Models.First());
@@ -53,6 +54,7 @@ namespace TaskFlow.Api.Controllers
 
             if (dto.Title != null) existingTask.title = dto.Title;
             if (dto.IsDone.HasValue) existingTask.is_done = dto.IsDone.Value;
+            if (dto.Due_Date != null) existingTask.due_date = DateOnly.Parse(dto.Due_Date);
 
             await existingTask.Update<TaskItem>();
 
@@ -88,11 +90,13 @@ namespace TaskFlow.Api.Controllers
     public class CreateTaskDto
     {
         public string Title { get; set; } = string.Empty;
+        public string Due_Date { get; set; } = string.Empty;
     }
 
     public class UpdateTaskDto
     {
         public string? Title { get; set; }
         public bool? IsDone { get; set; }
+        public string? Due_Date { get; set; }
     }
 }

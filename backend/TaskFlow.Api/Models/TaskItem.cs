@@ -17,4 +17,7 @@ public class TaskItem : BaseModel
     
     [Column("is_done")]
     public bool is_done { get; set; }
+    
+    [Column("due_date")]
+    public DateOnly due_date { get; set; }
 }
