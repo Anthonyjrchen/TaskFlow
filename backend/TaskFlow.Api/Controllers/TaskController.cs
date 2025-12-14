@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TaskFlow.Api.Data;
 using TaskFlow.Api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace TaskFlow.Api.Controllers
 {
@@ -9,54 +11,54 @@ namespace TaskFlow.Api.Controllers
     [Authorize]
     public class TaskController: ControllerBase
     {
-        private readonly Supabase.Client _supabase;
-        public TaskController(Supabase.Client supabase)
+        private readonly AppDbContext _db;
+        public TaskController(AppDbContext db)
         {
-            _supabase = supabase;
+            _db = db;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllTasks()
         {
-            var userId = GetUserId();
-            var response = await _supabase.From<TaskItem>().Where(x => x.user_id == userId).Get();
-            return Ok(response.Models);
+            var userId = "test-user-123";
+            var tasks = await _db.Tasks
+                .Where(t => t.UserId == userId)
+                .ToListAsync();
+            return Ok(tasks);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateTask([FromBody] CreateTaskDto dto)
         {
-            var userID = GetUserId();
+            var userId = "test-user-123";
             var task = new TaskItem
             {
-                user_id = userID,
-                title = dto.Title,
-                is_done = false,
-                due_date = DateOnly.Parse(dto.Due_Date)
+                UserId = userId,
+                Title = dto.Title,
+                IsDone = false,
+                DueDate = DateOnly.Parse(dto.Due_Date)
             };
-            var response = await _supabase.From<TaskItem>().Insert(task);
-            return CreatedAtAction(nameof(GetAllTasks), new { id = response.Models.First().id}, response.Models.First());
+            _db.Tasks.Add(task);
+            await _db.SaveChangesAsync();
+            return Ok(task);
+
         }
 
-        [HttpPut("{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateTask(long id, [FromBody] UpdateTaskDto dto)
         {
-            var userId = GetUserId();
-            var existingTask = await _supabase
-                .From<TaskItem>()
-                .Where(t => t.id == id && t.user_id == userId)
-                .Single();
-            
+            var userId = "test-user-123";
+            var existingTask = await _db.Tasks.FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
             if (existingTask == null)
             {
                 return NotFound("Task not found or you do not have permission.");
             }
 
-            if (dto.Title != null) existingTask.title = dto.Title;
-            if (dto.IsDone.HasValue) existingTask.is_done = dto.IsDone.Value;
-            if (dto.Due_Date != null) existingTask.due_date = DateOnly.Parse(dto.Due_Date);
+            if (dto.Title != null) existingTask.Title = dto.Title;
+            if (dto.IsDone.HasValue) existingTask.IsDone = dto.IsDone.Value;
+            if (dto.Due_Date != null) existingTask.DueDate = DateOnly.Parse(dto.Due_Date);
 
-            await existingTask.Update<TaskItem>();
+            await _db.SaveChangesAsync();
 
             return Ok(existingTask);
         }
@@ -64,8 +66,13 @@ namespace TaskFlow.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(long id)
         {
-            var userId = GetUserId();
-            await _supabase.From<TaskItem>().Where(x => x.id == id && x.user_id == userId).Delete();
+            var userId = "test-user-123";
+            var existingTask = await _db.Tasks.FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
+            if (existingTask == null) {
+                return NotFound("Task not found or you do not have permission.");
+            }
+            _db.Tasks.Remove(existingTask);
+            await _db.SaveChangesAsync();
             return NoContent();
         }
 
