@@ -8,7 +8,7 @@ namespace TaskFlow.Api.Controllers
 {
     [ApiController]
     [Route("api/tasks")]
-    [Authorize]
+    // [Authorize]
     public class TaskController: ControllerBase
     {
         private readonly AppDbContext _db;
