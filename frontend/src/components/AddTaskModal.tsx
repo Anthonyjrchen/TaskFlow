@@ -57,7 +57,7 @@ function AddTaskModal({ isOpen, onClose, onTaskAdded }: AddTaskModalProps) {
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Enter task title"
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
@@ -74,7 +74,7 @@ function AddTaskModal({ isOpen, onClose, onTaskAdded }: AddTaskModalProps) {
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
                 min={new Date().toISOString().split("T")[0]}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 cursor-pointer"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 cursor-pointer"
               />
             </div>
 
@@ -82,13 +82,13 @@ function AddTaskModal({ isOpen, onClose, onTaskAdded }: AddTaskModalProps) {
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
+                className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 text-white bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg hover:from-cyan-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all shadow-sm hover:shadow-md"
+                className="px-4 py-2 text-white bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all shadow-sm hover:shadow-md"
               >
                 Add Task
               </button>

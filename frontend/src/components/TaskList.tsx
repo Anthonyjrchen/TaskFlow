@@ -27,7 +27,7 @@ function TaskList({
     <div className="w-full overflow-hidden rounded-xl shadow-lg bg-white">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gradient-to-r from-cyan-500 to-blue-500">
+          <thead className="bg-gradient-to-r from-teal-500 to-teal-600">
             <tr>
               <th className="px-6 py-4 text-center text-sm font-semibold text-white uppercase tracking-wider">
                 Status
@@ -64,7 +64,7 @@ function TaskList({
                       type="checkbox"
                       checked={task.is_done}
                       onChange={() => onToggleTask?.(task.id)}
-                      className="h-5 w-5 rounded border-gray-300 text-cyan-600 focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 cursor-pointer transition-all"
+                      className="h-5 w-5 rounded border-gray-300 text-teal-600 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 cursor-pointer transition-all"
                     />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -93,7 +93,7 @@ function TaskList({
                   <td className="px-6 py-4 whitespace-nowrap text-center">
                     <button
                       onClick={() => onEditTask?.(task.id)}
-                      className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 shadow-sm hover:shadow-md"
+                      className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all duration-150 shadow-sm hover:shadow-md"
                     >
                       Edit
                     </button>

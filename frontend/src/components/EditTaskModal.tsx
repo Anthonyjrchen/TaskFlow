@@ -94,7 +94,7 @@ function EditTaskModal({ isOpen, onClose, task, onSave }: EditTaskModalProps) {
                         handleSave();
                       }
                     }}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all outline-none"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all outline-none"
                     placeholder="Enter task title..."
                     autoFocus
                   />
@@ -103,7 +103,7 @@ function EditTaskModal({ isOpen, onClose, task, onSave }: EditTaskModalProps) {
                 <div className="mt-6 flex gap-3 justify-end">
                   <button
                     type="button"
-                    className="inline-flex justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 transition-all"
+                    className="inline-flex justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition-all"
                     onClick={onClose}
                     disabled={isSaving}
                   >
@@ -111,7 +111,7 @@ function EditTaskModal({ isOpen, onClose, task, onSave }: EditTaskModalProps) {
                   </button>
                   <button
                     type="button"
-                    className="inline-flex justify-center rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 px-4 py-2 text-sm font-medium text-white hover:from-cyan-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
+                    className="inline-flex justify-center rounded-lg bg-gradient-to-r from-teal-500 to-teal-600 px-4 py-2 text-sm font-medium text-white hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
                     onClick={handleSave}
                     disabled={isSaving || !title.trim()}
                   >

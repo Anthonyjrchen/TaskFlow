@@ -55,7 +55,7 @@ function LoginPage() {
           {/* Tab Switcher */}
           <div className="relative flex bg-gray-100 rounded-lg p-1 mb-8">
             <div
-              className={`absolute top-1 bottom-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-md transition-all duration-300 ease-in-out ${
+              className={`absolute top-1 bottom-1 bg-gradient-to-r from-teal-500 to-teal-600 rounded-md transition-all duration-300 ease-in-out ${
                 mode === "login" ? "left-1 right-1/2" : "left-1/2 right-1"
               }`}
             />
@@ -85,7 +85,7 @@ function LoginPage() {
 
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent mb-2">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-teal-500 to-teal-600 bg-clip-text text-transparent mb-2">
               {mode === "login" ? "Welcome Back" : "Create Account"}
             </h1>
             <p className="text-gray-600">
@@ -118,7 +118,7 @@ function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
               />
             </div>
 
@@ -136,7 +136,7 @@ function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
               />
             </div>
 
@@ -163,7 +163,7 @@ function LoginPage() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required={mode === "signup"}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
                   />
                 </div>
               )}
@@ -172,7 +172,7 @@ function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full px-4 py-3 text-white font-medium bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg hover:from-cyan-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-3 text-white font-medium bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading
                 ? mode === "login"
