@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { taskApi } from "../services/api";
 import type { Task } from "../types/task";
@@ -8,6 +9,7 @@ import EditTaskModal from "../components/EditTaskModal";
 
 function TasksPage() {
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
@@ -75,45 +77,60 @@ function TasksPage() {
     }
   };
 
-  if (user) {
-    return (
-      <div>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold">Task Manager</h1>
-            <h2 className="text-gray-600">Welcome user {user.email}</h2>
-          </div>
-          <AddTaskButton onTaskAdded={handleTaskAdded} />
+  return (
+    <div>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">Task Manager</h1>
+          <h2 className="text-gray-600">
+            {user
+              ? `Welcome user ${user.email}`
+              : "Please log in to manage your tasks"}
+          </h2>
+        </div>
+        <AddTaskButton onTaskAdded={handleTaskAdded} disabled={!user} />
+        {user ? (
           <button
             type="button"
-            className="border-2 bg-red-400 p-1 m-1"
+            className="px-4 py-2 text-white font-medium bg-gradient-to-r from-red-500 to-pink-500 rounded-lg hover:from-red-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all shadow-sm hover:shadow-md"
             onClick={signOut}
           >
             Logout
           </button>
+        ) : (
+          <button
+            type="button"
+            className="px-4 py-2 text-white font-medium bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg hover:from-cyan-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 transition-all shadow-sm hover:shadow-md"
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </button>
+        )}
+      </div>
+      {user ? (
+        <>
+          <TaskList
+            tasks={tasks}
+            onToggleTask={handleToggleTask}
+            onEditTask={handleEditTask}
+            onDeleteTask={handleDeleteTask}
+          />
+          <EditTaskModal
+            isOpen={isEditModalOpen}
+            onClose={() => setIsEditModalOpen(false)}
+            task={taskToEdit}
+            onSave={handleSaveEdit}
+          />
+        </>
+      ) : (
+        <div className="w-full mt-8 overflow-hidden rounded-xl shadow-lg bg-white">
+          <div className="px-6 py-12 text-center text-gray-500">
+            Log in to view your tasks
+          </div>
         </div>
-        <TaskList
-          tasks={tasks}
-          onToggleTask={handleToggleTask}
-          onEditTask={handleEditTask}
-          onDeleteTask={handleDeleteTask}
-        />
-        <EditTaskModal
-          isOpen={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
-          task={taskToEdit}
-          onSave={handleSaveEdit}
-        />
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <h1>Task Manager</h1>
-        <h2>Not logged in.</h2>
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }
 
 export default TasksPage;
