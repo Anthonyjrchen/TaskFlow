@@ -3,14 +3,14 @@ import type { Task } from "../types/task";
 interface TaskListProps {
   tasks: Task[];
   onToggleTask?: (taskId: number) => void;
-  onUpdateTask?: (taskId: number) => void;
+  onEditTask?: (taskId: number) => void;
   onDeleteTask?: (taskId: number) => void;
 }
 
 function TaskList({
   tasks,
   onToggleTask,
-  onUpdateTask,
+  onEditTask,
   onDeleteTask,
 }: TaskListProps) {
   return (
@@ -26,7 +26,7 @@ function TaskList({
                 Task Name
               </th>
               <th className="px-6 py-4 text-center text-sm font-semibold text-white uppercase tracking-wider">
-                Update
+                Edit
               </th>
               <th className="px-6 py-4 text-center text-sm font-semibold text-white uppercase tracking-wider">
                 Delete
@@ -67,10 +67,10 @@ function TaskList({
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-center">
                     <button
-                      onClick={() => onUpdateTask?.(task.id)}
+                      onClick={() => onEditTask?.(task.id)}
                       className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 shadow-sm hover:shadow-md"
                     >
-                      Update
+                      Edit
                     </button>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-center">

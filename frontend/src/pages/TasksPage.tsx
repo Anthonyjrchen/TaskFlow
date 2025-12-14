@@ -4,10 +4,13 @@ import { taskApi } from "../services/api";
 import type { Task } from "../types/task";
 import AddTaskButton from "../components/AddTaskButton";
 import TaskList from "../components/TaskList";
+import EditTaskModal from "../components/EditTaskModal";
 
 function TasksPage() {
   const { user, signOut } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -46,6 +49,32 @@ function TasksPage() {
     }
   };
 
+  const handleEditTask = (taskId: number) => {
+    const task = tasks.find((t) => t.id === taskId);
+    if (task) {
+      setTaskToEdit(task);
+      setIsEditModalOpen(true);
+    }
+  };
+
+  const handleSaveEdit = async (taskId: number, newTitle: string) => {
+    await taskApi.update(taskId, { title: newTitle });
+    loadTasks();
+    setIsEditModalOpen(false);
+    setTaskToEdit(null);
+  };
+
+  const handleDeleteTask = async (taskId: number) => {
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      try {
+        await taskApi.delete(taskId);
+        loadTasks();
+      } catch (err: any) {
+        console.error("Error deleting task:", err);
+      }
+    }
+  };
+
   if (user) {
     return (
       <div>
@@ -63,7 +92,18 @@ function TasksPage() {
             Logout
           </button>
         </div>
-        <TaskList tasks={tasks} onToggleTask={handleToggleTask} />
+        <TaskList
+          tasks={tasks}
+          onToggleTask={handleToggleTask}
+          onEditTask={handleEditTask}
+          onDeleteTask={handleDeleteTask}
+        />
+        <EditTaskModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          task={taskToEdit}
+          onSave={handleSaveEdit}
+        />
       </div>
     );
   } else {
