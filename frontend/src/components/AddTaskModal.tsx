@@ -9,15 +9,23 @@ interface AddTaskModalProps {
 
 function AddTaskModal({ isOpen, onClose, onTaskAdded }: AddTaskModalProps) {
   const [title, setTitle] = useState("");
-  const [dueDate, setDueDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
+
+  // Get today's date in local timezone (PST)
+  const getTodayLocal = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const [dueDate, setDueDate] = useState(getTodayLocal());
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onTaskAdded(title, dueDate);
     setTitle("");
-    setDueDate(new Date().toISOString().split("T")[0]);
+    setDueDate(getTodayLocal());
     onClose();
   };
 
@@ -58,7 +66,7 @@ function AddTaskModal({ isOpen, onClose, onTaskAdded }: AddTaskModalProps) {
                 htmlFor="due-date"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Due Date
+                getTodayLocal() Due Date
               </label>
               <input
                 id="due-date"
