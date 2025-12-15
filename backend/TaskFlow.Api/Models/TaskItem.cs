@@ -12,7 +12,7 @@ public class TaskItem
 
     [Required]
     [Column("user_id")]
-    public string UserId { get; set; } = string.Empty;
+    public Guid UserId { get; set; }
 
     [Required]
     [Column("title")]
@@ -23,4 +23,7 @@ public class TaskItem
 
     [Column("due_date")]
     public DateOnly DueDate { get; set; }
+
+    [ForeignKey(nameof(UserId))]
+    public User User { get; set; } = null!;
 }

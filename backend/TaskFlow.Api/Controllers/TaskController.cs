@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TaskFlow.Api.Data;
 using TaskFlow.Api.Models;
 using Microsoft.EntityFrameworkCore;
-
+using TaskFlow.Api.DTOs;
 namespace TaskFlow.Api.Controllers
 {
     [ApiController]
@@ -16,11 +16,17 @@ namespace TaskFlow.Api.Controllers
         {
             _db = db;
         }
+        
+        private Guid GetTestUserId()
+        {
+            // This is a hardcoded test GUID - we'll replace this with real JWT extraction later
+            return Guid.Parse("00000000-0000-0000-0000-000000000001");
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetAllTasks()
         {
-            var userId = "test-user-123";
+            var userId = GetTestUserId();
             var tasks = await _db.Tasks
                 .Where(t => t.UserId == userId)
                 .ToListAsync();
@@ -30,7 +36,7 @@ namespace TaskFlow.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTask([FromBody] CreateTaskDto dto)
         {
-            var userId = "test-user-123";
+            var userId = GetTestUserId();
             var task = new TaskItem
             {
                 UserId = userId,
@@ -47,7 +53,7 @@ namespace TaskFlow.Api.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateTask(long id, [FromBody] UpdateTaskDto dto)
         {
-            var userId = "test-user-123";
+            var userId = GetTestUserId();
             var existingTask = await _db.Tasks.FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
             if (existingTask == null)
             {
@@ -66,7 +72,7 @@ namespace TaskFlow.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(long id)
         {
-            var userId = "test-user-123";
+            var userId = GetTestUserId();
             var existingTask = await _db.Tasks.FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
             if (existingTask == null) {
                 return NotFound("Task not found or you do not have permission.");
@@ -92,18 +98,5 @@ namespace TaskFlow.Api.Controllers
             
             return Guid.Parse(userIdClaim);
         }
-    }
-    
-    public class CreateTaskDto
-    {
-        public string Title { get; set; } = string.Empty;
-        public string Due_Date { get; set; } = string.Empty;
-    }
-
-    public class UpdateTaskDto
-    {
-        public string? Title { get; set; }
-        public bool? IsDone { get; set; }
-        public string? Due_Date { get; set; }
     }
 }
