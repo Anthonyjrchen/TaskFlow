@@ -4,11 +4,12 @@ using TaskFlow.Api.Data;
 using TaskFlow.Api.Models;
 using Microsoft.EntityFrameworkCore;
 using TaskFlow.Api.DTOs;
+using System.Security.Claims;
 namespace TaskFlow.Api.Controllers
 {
     [ApiController]
     [Route("api/tasks")]
-    // [Authorize]
+    [Authorize]
     public class TaskController: ControllerBase
     {
         private readonly AppDbContext _db;
@@ -17,16 +18,20 @@ namespace TaskFlow.Api.Controllers
             _db = db;
         }
         
-        private Guid GetTestUserId()
+        private Guid GetUserId()
         {
-            // This is a hardcoded test GUID - we'll replace this with real JWT extraction later
-            return Guid.Parse("00000000-0000-0000-0000-000000000001");
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier) 
+                        ?? User.FindFirst("sub");
+            
+            if (userIdClaim == null)
+                throw new UnauthorizedAccessException("User ID not found in token");
+            
+            return Guid.Parse(userIdClaim.Value);
         }
-
         [HttpGet]
         public async Task<IActionResult> GetAllTasks()
         {
-            var userId = GetTestUserId();
+            var userId = GetUserId();
             var tasks = await _db.Tasks
                 .Where(t => t.UserId == userId)
                 .ToListAsync();
@@ -36,7 +41,7 @@ namespace TaskFlow.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTask([FromBody] CreateTaskDto dto)
         {
-            var userId = GetTestUserId();
+            var userId = GetUserId();
             var task = new TaskItem
             {
                 UserId = userId,
@@ -53,7 +58,7 @@ namespace TaskFlow.Api.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateTask(long id, [FromBody] UpdateTaskDto dto)
         {
-            var userId = GetTestUserId();
+            var userId = GetUserId();
             var existingTask = await _db.Tasks.FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
             if (existingTask == null)
             {
@@ -72,7 +77,7 @@ namespace TaskFlow.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(long id)
         {
-            var userId = GetTestUserId();
+            var userId = GetUserId();
             var existingTask = await _db.Tasks.FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
             if (existingTask == null) {
                 return NotFound("Task not found or you do not have permission.");
@@ -80,23 +85,6 @@ namespace TaskFlow.Api.Controllers
             _db.Tasks.Remove(existingTask);
             await _db.SaveChangesAsync();
             return NoContent();
-        }
-
-        private Guid GetUserId()
-        {
-            var userIdClaim = User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
-            
-            if (string.IsNullOrEmpty(userIdClaim))
-            {
-                userIdClaim = User.FindFirst("sub")?.Value;
-            }
-            
-            if (string.IsNullOrEmpty(userIdClaim))
-            {
-                throw new UnauthorizedAccessException("User ID not found in token");
-            }
-            
-            return Guid.Parse(userIdClaim);
         }
     }
 }
