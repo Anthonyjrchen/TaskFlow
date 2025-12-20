@@ -1,6 +1,5 @@
 import axios from "axios";
 import type { Task, CreateTaskDto, UpdateTaskDto } from "../types/task";
-import { supabase } from "../lib/supabase";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -14,11 +13,9 @@ const api = axios.create({
 
 // Add authorization header to every request
 api.interceptors.request.use(async (config) => {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  if (session?.access_token) {
-    config.headers.Authorization = `Bearer ${session.access_token}`;
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
@@ -35,12 +32,24 @@ export const taskApi = {
   },
 
   update: async (id: number, dto: UpdateTaskDto): Promise<Task> => {
-    const response = await api.put<Task>(`/tasks/${id}`, dto);
+    const response = await api.patch<Task>(`/tasks/${id}`, dto);
     return response.data;
   },
 
   delete: async (id: number): Promise<void> => {
     await api.delete(`/tasks/${id}`);
+  },
+};
+
+export const authApi = {
+  register: async (email: string, password: string) => {
+    const response = await api.post("/auth/register", { email, password });
+    return response.data;
+  },
+
+  login: async (email: string, password: string) => {
+    const response = await api.post("/auth/login", { email, password });
+    return response.data;
   },
 };
 
