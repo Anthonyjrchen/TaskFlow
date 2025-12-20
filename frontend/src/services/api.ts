@@ -20,6 +20,17 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const taskApi = {
   getAll: async (): Promise<Task[]> => {
     const response = await api.get<Task[]>("/tasks");
