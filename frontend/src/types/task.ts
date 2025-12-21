@@ -2,19 +2,19 @@ export interface Task {
   id: number;
   user_id: string;
   title: string;
-  is_done: boolean;
-  due_date: string;
+  isDone: boolean;
+  dueDate: string;
 }
 
 export interface CreateTaskDto {
   title: string;
-  due_date: string;
+  dueDate: string;
 }
 
 export interface UpdateTaskDto {
   title?: string;
   isDone?: boolean;
-  due_date?: string;
+  dueDate?: string;
 }
 
 export interface User {

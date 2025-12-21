@@ -18,6 +18,7 @@ interface AuthContextType {
 }
 
 interface User {
+  id: string;
   email: string;
 }
 
@@ -38,7 +39,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           localStorage.removeItem("token");
           setUser(null);
         } else {
-          setUser({ email: decoded.email });
+          setUser({ email: decoded.email, id: decoded.sub });
         }
       } catch (error) {
         localStorage.removeItem("token");
@@ -52,13 +53,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signIn = async (email: string, password: string) => {
     const response = await authApi.login(email, password);
     localStorage.setItem("token", response.token);
-    setUser({ email });
+    const decoded = jwtDecode<JwtPayload>(response.token);
+    setUser({ email: decoded.email, id: decoded.sub });
   };
 
   const signUp = async (email: string, password: string) => {
     const response = await authApi.register(email, password);
     localStorage.setItem("token", response.token);
-    setUser({ email });
+    const decoded = jwtDecode<JwtPayload>(response.token);
+    setUser({ email: decoded.email, id: decoded.sub });
   };
 
   const signOut = async () => {

@@ -13,13 +13,11 @@ function TaskList({
   onEditTask,
   onDeleteTask,
 }: TaskListProps) {
-  // Sort tasks by due_date (ascending), then by title (alphabetically)
   const sortedTasks = [...tasks].sort((a, b) => {
-    // Compare due dates
-    const dateComparison = a.due_date.localeCompare(b.due_date);
+    const aDate = a.dueDate || "";
+    const bDate = b.dueDate || "";
+    const dateComparison = aDate.localeCompare(bDate);
     if (dateComparison !== 0) return dateComparison;
-
-    // If dates are equal, compare titles alphabetically
     return a.title.localeCompare(b.title);
   });
 
@@ -62,7 +60,7 @@ function TaskList({
                   <td className="px-6 py-4 whitespace-nowrap text-center">
                     <input
                       type="checkbox"
-                      checked={task.is_done}
+                      checked={task.isDone}
                       onChange={() => onToggleTask?.(task.id)}
                       className="h-5 w-5 rounded border-gray-300 text-teal-600 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 cursor-pointer transition-all"
                     />
@@ -70,7 +68,7 @@ function TaskList({
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
                       className={`text-sm font-medium ${
-                        task.is_done
+                        task.isDone
                           ? "text-gray-400 line-through"
                           : "text-gray-900"
                       }`}
@@ -80,14 +78,13 @@ function TaskList({
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-center">
                     <span className="text-sm text-gray-700">
-                      {new Date(task.due_date + "T00:00:00").toLocaleDateString(
-                        "en-US",
-                        {
-                          month: "short",
-                          day: "numeric",
-                          year: "numeric",
-                        }
-                      )}
+                      {task.dueDate
+                        ? new Date(task.dueDate).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          })
+                        : "No due date"}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-center">

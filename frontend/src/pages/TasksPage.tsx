@@ -18,7 +18,7 @@ function TasksPage() {
     if (user) {
       loadTasks();
     }
-  }, [user?.id]);
+  }, [user]);
 
   const loadTasks = async () => {
     try {
@@ -32,7 +32,7 @@ function TasksPage() {
 
   const handleTaskAdded = async (title: string, dueDate: string) => {
     try {
-      await taskApi.create({ title, due_date: dueDate });
+      await taskApi.create({ title, dueDate: dueDate });
       loadTasks();
     } catch (err: any) {
       console.error("Error creating task:", err);
@@ -43,7 +43,7 @@ function TasksPage() {
     try {
       const task = tasks.find((t) => t.id === taskId);
       if (task) {
-        await taskApi.update(taskId, { isDone: !task.is_done });
+        await taskApi.update(taskId, { isDone: !task.isDone });
         loadTasks();
       }
     } catch (err: any) {
