@@ -44,12 +44,14 @@ TaskFlow is a full-stack task management application built with React (Vite), AS
 ### Setup
 
 1. **Clone the repo:**
+
    ```bash
    git clone https://github.com/Anthonyjrchen/TaskFlow.git
    cd TaskFlow
    ```
 
 2. **Backend:**
+
    - Update your connection string in `backend/TaskFlow.Api/appsettings.Development.json`
    - Run migrations:
      ```bash
@@ -116,7 +118,21 @@ TaskFlow is a full-stack task management application built with React (Vite), AS
 
 ## 📚 Screenshots
 
-_Add screenshots of your app here!_
+### Login Page
+
+![Login Page](screenshots/taskflow3.png)
+
+### Sign Up Page
+
+![Sign Up Page](screenshots/taskflow4.png)
+
+### Dashboard (Logged In)
+
+![DashboardIn](screenshots/taskflow1.png)
+
+### Dashboard (Logged Out)
+
+![DashboardOut](screenshots/taskflow2.png)
 
 ---
 
